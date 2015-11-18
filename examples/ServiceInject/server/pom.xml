@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+		<artifactId>muskel-example-serviceinject-server</artifactId>
+	<packaging>jar</packaging>
+
+	<name>Muskel Examples Service Inject Server</name>
+
+	<parent>
+		<groupId>it.reactive.muskel.examples</groupId>
+		<artifactId>muskel-example-serviceinject</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<dependencies>
+
+
+		<dependency>
+			<groupId>it.reactive.muskel.examples</groupId>
+			<artifactId>muskel-example-serviceinject-shared</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		    <version>4.1.7.RELEASE</version>
+			  <scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+	</dependencies>
+	
+	
+</project>

@@ -1,0 +1,7 @@
+<configuration scan="true" scanPeriod="30 seconds">
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<logger name="it.muskel" level="TRACE" />
+	<logger name="com.hazelcast" level="INFO" />
+</configuration>
+
+		

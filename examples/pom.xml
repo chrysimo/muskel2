@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>it.reactive.muskel.examples</groupId>
+	<artifactId>muskel-examples</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<name>Muskel Examples Maker</name>
+	
+	<parent>
+		<groupId>it.reactive.muskel</groupId>
+		<artifactId>muskel-maker</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<modules>
+		<module>HelloWorld</module>
+		<module>Prime</module>
+		<module>QuickSort</module>
+		<module>ServiceInject</module>
+	</modules>
+	
+
+	
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>it.reactive.muskel</groupId>
+			<artifactId>muskel-core</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+
+	</dependencies>
+
+	
+
+</project>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>it.reactive.muskel</groupId>
+	<artifactId>muskel-maker</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<name>Muskel Maker</name>
+	<developers>
+		<developer>
+			<name>Christian Simonelli</name>
+			<id>chrysimo</id>
+			<email>chrysimo@gmail.com</email>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	<properties>
+	<hazelcast.version>3.5.3</hazelcast.version>
+		<junit.version>4.12</junit.version>
+		<org.slf4j.version>1.7.12</org.slf4j.version>
+		<java.version>1.8</java.version>
+		 <org.projectlombok.lombok.version>1.16.6</org.projectlombok.lombok.version>
+		  <javax.inject.version>1</javax.inject.version>
+		   <com.google.guava.version>18.0</com.google.guava.version>
+      
+	</properties>
+	
+	<modules>
+		<module>core</module>
+		<module>server</module>
+		<module>examples</module>
+	</modules>
+	
+	<dependencyManagement>	
+	<dependencies>
+
+<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${com.google.guava.version}</version>
+		</dependency>
+		
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${org.projectlombok.lombok.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast-client</artifactId>
+			<version>${hazelcast.version}</version>
+		</dependency>
+		<dependency>
+	<groupId>com.hazelcast</groupId>
+	<artifactId>hazelcast-spring</artifactId>
+	<version>${hazelcast.version}</version>
+</dependency>
+
+       <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>${javax.inject.version}</version>
+        </dependency>
+		
+		
+		
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
+			<version>${hazelcast.version}</version>
+		</dependency>
+
+ <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+           <version>${org.slf4j.version}</version>
+     
+        </dependency>
+
+		
+ <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+           <version>${org.slf4j.version}</version>
+           
+        </dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+
+
+		<dependency>
+            <groupId>it.reactive.muskel</groupId>
+            <artifactId>muskel-core</artifactId>
+           <version>1.0.0</version>
+           
+        </dependency>
+		
+		
+		
+	</dependencies>
+	</dependencyManagement>
+	<build>
+		<plugins>
+
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+               
+                <!-- The configuration of the plugin -->
+                <configuration>
+                    <archive>
+                        <!-- Manifest specific configuration -->
+                        <manifest>
+                            <!-- Classpath is added to the manifest of the created jar file. -->
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                        <manifestEntries>
+                            <Specification-Title>${project.name}</Specification-Title>
+                            <Specification-Version>${project.version}</Specification-Version>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${system.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+     
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+<version>3.3</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<showWarnings>true</showWarnings>
+					<compilerArguments>
+						<Xlint />
+						<XDignore.symbol.file />
+					</compilerArguments>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+</project>
