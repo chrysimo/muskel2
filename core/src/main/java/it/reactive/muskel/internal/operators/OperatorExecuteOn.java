@@ -48,13 +48,13 @@ public class OperatorExecuteOn<T> implements Operator<T, T> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final int SIZE = 10;
+	private static final int SIZE = 100;
 
 	private final MuskelContext context;
 
 	private final AtomicInteger counter = new AtomicInteger(0);
 
-	private int requested = 0;
+	private int inQueueCount = 0;
 
 	private final int windowSize;
 
@@ -69,14 +69,19 @@ public class OperatorExecuteOn<T> implements Operator<T, T> {
 		Subscriber<? super T> t, int windowSize) {
 	    super(t);
 	    this.windowSize = windowSize;
-	    this.queue = new SpscArrayQueue<Object>(windowSize);
-	    // this.queue = new ArrayBlockingQueue<Object>(windowSize + 1);
+	    //uno in piu' per gestire l'errore o la oncomplete
+	    this.queue = new SpscArrayQueue<Object>(windowSize+1);
 	    this.context = context;
 	}
 
 	@Override
 	protected boolean add(Object obj) {
 	    return queue.offer(obj);
+	}
+
+	@Override
+	public void request(long n) {
+	    onChildRequestCalled(n);
 	}
 
 	@Override
@@ -87,27 +92,32 @@ public class OperatorExecuteOn<T> implements Operator<T, T> {
 	    }
 	}
 
-	/**
-	 * This will be invoked by only a single thread, managed by the
-	 * counter.increment/decrement
-	 */
 	protected void pollQueue() {
+
 	    do {
-		Object v = queue.poll();
-		onPool(v);
-		requested--;
+		// La variabile inQueueCount e' acceduta da un solo thread e può
+		// non essere atomica
+		if (inQueueCount > 0) {
 
-	    } while (counter.decrementAndGet() > 0 && !isUnsubscribed());
-	    if (requested == 0) {
-		long childRequest = childRequested.get();
-		if (childRequest > 0) {
-		    long totalToRequest = childRequest > windowSize ? windowSize
-			    : childRequest;
-		    childRequested.addAndGet(-totalToRequest);
-		    request(totalToRequest);
-
+		    Object v = queue.poll();
+		    onPool(v);
+		    if (v != null) {
+			inQueueCount--;
+		    }
 		}
-	    }
+		if (inQueueCount == 0 && !isUnsubscribed()) {
+		    //effettuo una nuova richiesta quando la coda e' vuota 
+		    long childRequest = childRequested.get();
+		    if (childRequest > 0) {
+			long totalToRequest = childRequest > windowSize ? windowSize
+				: childRequest;
+			childRequested.addAndGet(-totalToRequest);
+			inQueueCount += totalToRequest;
+			super.request(totalToRequest);
+
+		    }
+		}
+	    } while (counter.decrementAndGet() > 0 && !isUnsubscribed());
 	}
 
     }
@@ -198,7 +208,6 @@ public class OperatorExecuteOn<T> implements Operator<T, T> {
 
 	    private boolean waitTermination;
 
-	  
 	    public MessageListenerSupplier(MuskelContext context,
 		    String subScriptionName, Subscriber<? super T> child,
 		    boolean waitTermination) {
