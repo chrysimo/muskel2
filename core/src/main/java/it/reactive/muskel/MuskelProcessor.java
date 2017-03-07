@@ -48,6 +48,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
+import java.util.stream.BaseStream;
 import java.util.stream.Stream;
 
 import org.reactivestreams.Publisher;
@@ -247,7 +248,7 @@ public interface MuskelProcessor<T> extends Serializable, AutoCloseable,
      * @return a MuskelProcessor that emits each item in the source
      *         {@link Stream} sequence
      */
-    public static <T> MuskelProcessor<T> fromStream(Stream<? extends T> stream) {
+    public static <T> MuskelProcessor<T> fromStream(BaseStream<? extends T, ?> stream) {
 	return create(new PublisherStreamSource<>(stream));
     }
 

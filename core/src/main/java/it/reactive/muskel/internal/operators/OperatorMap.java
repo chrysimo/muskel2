@@ -7,6 +7,7 @@ import it.reactive.muskel.context.ThreadLocalMuskelContext;
 import it.reactive.muskel.context.utils.ManagedContextUtils;
 import it.reactive.muskel.functions.SerializableBiFunction;
 import it.reactive.muskel.functions.SerializableFunction;
+import it.reactive.muskel.functions.SerializableSubscriber;
 import it.reactive.muskel.functions.SerializableSupplier;
 import it.reactive.muskel.internal.functions.Operator;
 import it.reactive.muskel.internal.operator.utils.BackpressureUtils;
@@ -46,8 +47,7 @@ public class OperatorMap<T, R> implements Operator<R, T> {
     }
 
     @RequiredArgsConstructor
-    private static class OperatorMapSubscribe<T, R> implements Subscriber<T>,
-	    Serializable {
+    private static class OperatorMapSubscribe<T, R> implements SerializableSubscriber<T> {
 	private static final long serialVersionUID = 1L;
 
 	@NonNull

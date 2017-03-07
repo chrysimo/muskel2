@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Stream;
+import java.util.stream.BaseStream;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class PublisherStreamSource<T> extends AtomicBoolean implements
     private static final long serialVersionUID = 1L;
 
     @NonNull
-    private final Stream<? extends T> stream;
+    private final BaseStream<? extends T, ? > stream;
 
     @Override
     public void subscribe(Subscriber<? super T> s) {
@@ -46,7 +46,7 @@ public class PublisherStreamSource<T> extends AtomicBoolean implements
 
 	private static final long serialVersionUID = 1L;
 	private final Iterator<? extends T> it;
-	private final Stream<? extends T> stream;
+	private final BaseStream<? extends T, ? > stream;
 	private final Subscriber<? super T> subscriber;
 
 	private volatile boolean cancelled;
@@ -57,7 +57,7 @@ public class PublisherStreamSource<T> extends AtomicBoolean implements
 	static final AtomicIntegerFieldUpdater<StreamSourceSubscription> WIP = AtomicIntegerFieldUpdater
 		.newUpdater(StreamSourceSubscription.class, "wip");
 
-	public StreamSourceSubscription(Stream<? extends T> stream,
+	public StreamSourceSubscription(BaseStream<? extends T, ?> stream,
 		Iterator<? extends T> it, Subscriber<? super T> subscriber) {
 	    this.stream = stream;
 	    this.it = it;
